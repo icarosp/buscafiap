@@ -22,18 +22,20 @@ enum Acao {
 	 */
 	Estado aplica(No pai) {
 		
-		Estado anterior = pai.estado;
-		if(this == DIREITA) {
-			return new Estado(anterior.Asujo, anterior.Bsujo, false /*quartoA*/);
+		//Estado anterior = pai.estado;
+		/*if(this == DIREITA) {
+			return new Estado(anterior.Asujo, anterior.Bsujo, false /*quartoA);
 		} else if(this == Acao.ESQUERDA) {
-			return new Estado(anterior.Asujo, anterior.Bsujo, true /*quartoA*/);
+			return new Estado(anterior.Asujo, anterior.Bsujo, true /*quartoA);
 		} else { //acao = ASPIRAR
 			if(anterior.quartoA) {
 				return new Estado(false, anterior.Bsujo, anterior.quartoA);
 			} else {
 				return new Estado(anterior.Asujo, false, anterior.quartoA);
 			}
-		}
+		}*/
+		
+		return null;
 	}
 	
 	/**
@@ -68,6 +70,10 @@ class Estado {
 		this.quartoA = quartoA;
 	}
 	
+	
+	
+	
+	
 	/**
 	 * @return O resultado do teste de término
 	 */
@@ -86,17 +92,22 @@ class Estado {
  *
  */
 class No {
-	public final Estado estado;
-	public final No pai;
-	public final Acao acao;
-	public final double custo;
+	//public final Estado estado;
+	private No pai;
+	private String nome; 
+	//public final Acao acao;
+	private LinkedList<No> vizinhos = new LinkedList<No>();
+	private double custo;
 	
-	public No(Estado e, No pai, Acao a) {
+	/*public No(Estado e, No pai, Acao a) {
 		this.estado = e;
 		this.pai = pai;
 		this.acao = a;
 		this.custo = pai == null ? 0 : pai.custo + a.custo();
-	}
+	}*/
+	
+	public double getCusto() {return custo;}
+	public void setCusto(double custo) {this.custo = custo;}
 }
 
 /**
@@ -136,6 +147,12 @@ class Fronteira {
 	}
 }
 
+
+
+
+
+
+
 /**
  * Classe que implementa o algoritmo de busca
  * @author antonio
@@ -163,7 +180,7 @@ public class Busca {
 
 	private No buscar() {
 		
-		No aberto = new No(estadoInicial, null, null);
+		/*No aberto = new No(estadoInicial, null, null);
 		fronteira.insere(aberto);
 		
 		while(!fronteira.vazio()) {
@@ -178,7 +195,7 @@ public class Busca {
 					fronteira.insere(filho);
 				}
 			}
-		}
+		}*/
 		
 		return null;
 	}
@@ -200,13 +217,13 @@ public class Busca {
 		
 		No atual = destino;
 		Deque<Acao> caminho = new LinkedList<Acao>();
-		while(atual.acao != null) {
-			caminho.addFirst(atual.acao);
-			atual = atual.pai;
-		}
+		//while(atual.acao != null) {
+			//caminho.addFirst(atual.acao);
+			//atual = atual.pai;
+		//}
 		
 		this.solucao = (Acao[]) caminho.toArray(new Acao[caminho.size()]);
-		this.custoSolucao = destino.custo;
+		this.custoSolucao = destino.getCusto();
 		return this.custoSolucao;
 	}
 }
