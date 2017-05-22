@@ -225,6 +225,10 @@ public class Busca {
 	private Vertex _cunh;
 	private Vertex _mara;
 	private Vertex _tigr;
+	private Vertex _bomj;
+	private Vertex _serr;
+	private Vertex _mode;
+	private Vertex _salt;
 	
 	public Busca(){
 
@@ -244,6 +248,10 @@ public class Busca {
 		_cunh = new Vertex("Cunha Pora");
 		_mara = new Vertex("Maravilha");
 		_tigr = new Vertex("Tigrinhos");
+		_bomj = new Vertex("Bom Jesus do Oeste");
+		_serr = new Vertex("Serra Alta");
+		_mode = new Vertex("Modelo");
+		_salt = new Vertex("Saltinho");
 		
 		//relacoes de divida/vizinhos
 		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
@@ -261,7 +269,11 @@ public class Busca {
 		_rome.vizinhos = new Edge[]{ new Edge(_flor, 25.4)};
 		_cunh.vizinhos = new Edge[]{ new Edge(_irac, 36.4),new Edge(_mara, 18.3)};
 		_mara.vizinhos = new Edge[]{ new Edge(_cunh, 18.3), new Edge(_irac, 23.7), new Edge(_tigr, 12.6)};
-		_tigr.vizinhos = new Edge[]{ new Edge(_mara, 12.6)};
+		_tigr.vizinhos = new Edge[]{ new Edge(_mara, 12.6),new Edge(_bomj, 9.6)};
+		_bomj.vizinhos = new Edge[]{ new Edge(_tigr, 9.6),new Edge(_serr, 14.6)};
+		_serr.vizinhos = new Edge[]{ new Edge(_bomj, 14.6),new Edge(_mode, 12), new Edge(_salt, 18.5)};
+		_mode.vizinhos = new Edge[]{ new Edge(_serr, 12)};
+		_salt.vizinhos = new Edge[]{ new Edge(_serr, 18.5)};
 	}
 	
 	public List<Vertex> getSolucao() {
@@ -373,6 +385,30 @@ public class Busca {
 					_inicio = _tigr;
 				else
 					_fim = _tigr;
+				break;
+			case "Bom Jesus do Oeste":
+				if(r.equals(Rota.INICIO))
+					_inicio = _bomj;
+				else
+					_fim = _bomj;
+				break;
+			case "Serra Alta":
+				if(r.equals(Rota.INICIO))
+					_inicio = _serr;
+				else
+					_fim = _serr;
+				break;
+			case "Modelo":
+				if(r.equals(Rota.INICIO))
+					_inicio = _mode;
+				else
+					_fim = _mode;
+				break;
+			case "Saltinho":
+				if(r.equals(Rota.INICIO))
+					_inicio = _salt;
+				else
+					_fim = _salt;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
