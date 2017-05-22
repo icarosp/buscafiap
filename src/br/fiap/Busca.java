@@ -195,7 +195,19 @@ class Fronteira {
  *
  */
 public class Busca {
+	
+	private Vertex _a;
+	private Vertex _m;
+	
+	public Busca(){
 
+		_a = new Vertex("A");
+		_m = new Vertex("M");
+		_a.adjacencies = new Edge[]{ new Edge(_m, 8)};
+		_m.adjacencies = new Edge[]{ new Edge(_a, 8)}; 
+		
+	}
+	
 	private Estado estadoInicial;
 	private Fronteira fronteira = new Fronteira();
 	
@@ -213,11 +225,10 @@ public class Busca {
 	public void setEstadoInicial(Estado inicial) {
 		estadoInicial = inicial;
 	}			
-
-	private No buscar() {
-		
-		Vertex source = new Vertex("Palma Sola");
-		
+	
+	
+	private static void computePaths(Vertex source)
+    {
 		source.minDistance = 0.;
 	    
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
@@ -240,6 +251,20 @@ public class Busca {
 			    }
 	        }
 	     }
+    }
+
+	private List<Vertex> buscar() {
+		
+
+		
+		
+		//Vertex source = new Vertex("Palma Sola");
+		
+
+	    
+        //System.out.println("Distance to " + Z + ": " + Z.minDistance);
+        //List<Vertex> path = getShortestPathTo(Z);
+        //System.out.println("Path: " + path);
 		/*No aberto = new No(estadoInicial, null, null);
 		fronteira.insere(aberto);
 		
@@ -256,8 +281,10 @@ public class Busca {
 				}
 			}
 		}*/
+        
+
 		
-	return null;
+        return null;
 	}
 	
     public static List<Vertex> getShortestPathTo(Vertex target)
@@ -279,22 +306,28 @@ public class Busca {
 	 */
 	public double resolver() {
 		
-		No destino = buscar();
-		if(destino == null) {
-			this.solucao = null;
-			this.custoSolucao = 0;
-			return 0;
-		}
+		computePaths(_a); // run Dijkstra
+        System.out.println("Distance to " + _m + ": " + _m.minDistance);
+        List<Vertex> path = getShortestPathTo(_m);
+        System.out.println("Path: " + path);
 		
-		No atual = destino;
-		Deque<Acao> caminho = new LinkedList<Acao>();
+		//No destino = buscar();
+		//if(destino == null) {
+			//this.solucao = null;
+			//this.custoSolucao = 0;
+			//return 0;
+		//}
+		
+		//No atual = destino;
+		//Deque<Acao> caminho = new LinkedList<Acao>();
 		//while(atual.acao != null) {
 			//caminho.addFirst(atual.acao);
 			//atual = atual.pai;
 		//}
 		
-		this.solucao = (Acao[]) caminho.toArray(new Acao[caminho.size()]);
-		this.custoSolucao = destino.getCusto();
-		return this.custoSolucao;
+		//this.solucao = (Acao[]) caminho.toArray(new Acao[caminho.size()]);
+		//this.custoSolucao = destino.getCusto();
+		//return this.custoSolucao;
+		return 1;
 	}
 }
