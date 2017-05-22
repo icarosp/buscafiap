@@ -189,11 +189,11 @@ public class Busca {
 		_anch = new Vertex("Anchieta");
 		
 		//relacoes de divida/vizinhos
-		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
+		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23),new Edge(_palm, 50.9)};
 		_guaruja.vizinhos = new Edge[]{ new Edge(_dion, 23), new Edge(_saoj, 17.5)};
 		_saoj.vizinhos = new Edge[]{ new Edge(_guaruja, 17.5), new Edge(_prin, 11.7), new Edge(_guaraciba, 15.2)};
 		_prin.vizinhos = new Edge[]{ new Edge(_saoj, 11.7)};
-		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7)};
+		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7),new Edge(_anch, 38.1)};
 		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5), new Edge(_desc, 16.7)};
 		_para.vizinhos = new Edge[]{ new Edge(_saom, 29.5)};
 		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7),new Edge(_belm, 18.7), new Edge(_irac, 26.4)};
@@ -211,8 +211,8 @@ public class Busca {
 		_salt.vizinhos = new Edge[]{ new Edge(_serr, 18.5),new Edge(_camp, 39.3)};
 		_camp.vizinhos = new Edge[]{ new Edge(_salt, 39.3),new Edge(_saob, 38.2), new Edge(_anch, 28.9),new Edge(_palm, 34)};
 		_saob.vizinhos = new Edge[]{ new Edge(_camp, 38.2)};
-		_anch.vizinhos = new Edge[]{ new Edge(_camp, 28.9),new Edge(_palm, 29.7)};
-		_palm.vizinhos = new Edge[]{ new Edge(_camp, 34),new Edge(_anch, 29.7)};
+		_anch.vizinhos = new Edge[]{ new Edge(_camp, 28.9),new Edge(_palm, 29.7),new Edge(_guaraciba, 38.1)};
+		_palm.vizinhos = new Edge[]{ new Edge(_camp, 34),new Edge(_anch, 29.7),new Edge(_dion, 50.9)};
 	}
 	
 	public List<Vertex> getSolucao() {

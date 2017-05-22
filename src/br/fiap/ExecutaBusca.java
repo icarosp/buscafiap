@@ -7,8 +7,8 @@ public class ExecutaBusca {
 		Busca busca = new Busca();
 		
 		//Digitar nome das cidades sem com letras Maiusculas e Minusculas e sem acento
-		String comeco =	"Dionisio Cerqueira";
-		String fim = "Palma Sola";
+		String comeco =	"Sao Bernardino";
+		String fim = "Santa Helena";
 		
 		try{
 			busca.setEstadoInicial(comeco);
@@ -36,18 +36,6 @@ public class ExecutaBusca {
 		catch(Exception ex){
 			System.out.println("Erro: "+ ex.toString());
 		}
-		 
-
-		
-		/*if(busca.getSolucao() == null) {
-			System.out.println("Nao ha solucao para o problema");
-		} else {
-			System.out.println("A solucao: ");
-			for(Acao a : busca.getSolucao()) {
-				System.out.println(a);
-			}
-		}*/
-
 	}
 
 }
