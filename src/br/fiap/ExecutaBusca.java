@@ -6,8 +6,9 @@ public class ExecutaBusca {
 		
 		Busca busca = new Busca();
 		
+		//Digitar nome das cidades sem com letras Maiusculas e Minusculas e sem acento
 		String comeco =	"Dionisio Cerqueira";
-		String fim = "Saltinho";
+		String fim = "Palma Sola";
 		
 		try{
 			busca.setEstadoInicial(comeco);

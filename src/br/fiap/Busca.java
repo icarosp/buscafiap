@@ -52,79 +52,6 @@ enum Rota{
 	FIM;
 }
 
-enum Acao {
-	DIREITA,
-	ESQUERDA,
-	ASPIRAR
-	;
-	
-	/**
-	 * @param pai O nó ao qual a ação será aplicada
-	 * @return O estado resultante de se aplicar a ação ao nó pai
-	 */
-	Estado aplica(No pai) {
-		
-		//Estado anterior = pai.estado;
-		/*if(this == DIREITA) {
-			return new Estado(anterior.Asujo, anterior.Bsujo, false /*quartoA);
-		} else if(this == Acao.ESQUERDA) {
-			return new Estado(anterior.Asujo, anterior.Bsujo, true /*quartoA);
-		} else { //acao = ASPIRAR
-			if(anterior.quartoA) {
-				return new Estado(false, anterior.Bsujo, anterior.quartoA);
-			} else {
-				return new Estado(anterior.Asujo, false, anterior.quartoA);
-			}
-		}*/
-		
-		return null;
-	}
-	
-	/**
-	 * @return O custo da ação
-	 */
-	double custo() {
-		return 1.0;
-	}
-	
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-}
-
-/**
- * Classe que define o estado do problema
- * 
- * @author antonio
- *
- */
-class Estado {
-
-	/**
-	 * Variáveis de estado
-	 */
-	public final boolean Asujo, Bsujo, quartoA;
-	
-	public Estado(boolean Asujo, boolean Bsujo, boolean quartoA) {
-		this.Asujo = Asujo;
-		this.Bsujo = Bsujo;
-		this.quartoA = quartoA;
-	}
-	
-	
-	
-	
-	
-	/**
-	 * @return O resultado do teste de término
-	 */
-	boolean terminal() {
-		return !Asujo && !Bsujo;
-	}
-	
-}
-
 /**
  * Estrutura contendo o nó de busca, como 
  * explicado em sala de aula.
@@ -229,6 +156,10 @@ public class Busca {
 	private Vertex _serr;
 	private Vertex _mode;
 	private Vertex _salt;
+	private Vertex _camp;
+	private Vertex _saob;
+	private Vertex _palm;
+	private Vertex _anch;
 	
 	public Busca(){
 
@@ -252,6 +183,10 @@ public class Busca {
 		_serr = new Vertex("Serra Alta");
 		_mode = new Vertex("Modelo");
 		_salt = new Vertex("Saltinho");
+		_camp = new Vertex("Campos Ere");
+		_saob = new Vertex("Sao Bernardino");
+		_palm = new Vertex("Palma Sola");
+		_anch = new Vertex("Anchieta");
 		
 		//relacoes de divida/vizinhos
 		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
@@ -273,7 +208,11 @@ public class Busca {
 		_bomj.vizinhos = new Edge[]{ new Edge(_tigr, 9.6),new Edge(_serr, 14.6)};
 		_serr.vizinhos = new Edge[]{ new Edge(_bomj, 14.6),new Edge(_mode, 12), new Edge(_salt, 18.5)};
 		_mode.vizinhos = new Edge[]{ new Edge(_serr, 12)};
-		_salt.vizinhos = new Edge[]{ new Edge(_serr, 18.5)};
+		_salt.vizinhos = new Edge[]{ new Edge(_serr, 18.5),new Edge(_camp, 39.3)};
+		_camp.vizinhos = new Edge[]{ new Edge(_salt, 39.3),new Edge(_saob, 38.2), new Edge(_anch, 28.9),new Edge(_palm, 34)};
+		_saob.vizinhos = new Edge[]{ new Edge(_camp, 38.2)};
+		_anch.vizinhos = new Edge[]{ new Edge(_camp, 28.9),new Edge(_palm, 29.7)};
+		_palm.vizinhos = new Edge[]{ new Edge(_camp, 34),new Edge(_anch, 29.7)};
 	}
 	
 	public List<Vertex> getSolucao() {
@@ -409,6 +348,30 @@ public class Busca {
 					_inicio = _salt;
 				else
 					_fim = _salt;
+				break;
+			case "Campos Ere":
+				if(r.equals(Rota.INICIO))
+					_inicio = _camp;
+				else
+					_fim = _camp;
+				break;
+			case "Sao Bernardino":
+				if(r.equals(Rota.INICIO))
+					_inicio = _saob;
+				else
+					_fim = _saob;
+				break;
+			case "Anchieta":
+				if(r.equals(Rota.INICIO))
+					_inicio = _anch;
+				else
+					_fim = _anch;
+				break;
+			case "Palma Sola":
+				if(r.equals(Rota.INICIO))
+					_inicio = _palm;
+				else
+					_fim = _palm;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " n�o cadastrada! Imposs�vel definir "+r.toString()+".");
