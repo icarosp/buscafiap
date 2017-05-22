@@ -251,7 +251,8 @@ public class Busca {
 		_belm.vizinhos = new Edge[]{ new Edge(_desc, 18.7), new Edge(_sant, 13.7)};
 		_sant.vizinhos = new Edge[]{ new Edge(_belm, 13.7)};
 		_irac.vizinhos = new Edge[]{ new Edge(_desc, 26.4),new Edge(_flor, 14)};
-		_flor.vizinhos = new Edge[]{ new Edge(_irac, 14)};
+		_flor.vizinhos = new Edge[]{ new Edge(_irac, 14),new Edge(_rome, 25.4)};
+		_rome.vizinhos = new Edge[]{ new Edge(_flor, 25.4)};
 		
 	}
 	
@@ -328,6 +329,24 @@ public class Busca {
 					_inicio = _sant;
 				else
 					_fim = _sant;
+				break;
+			case "Iraceminha":
+				if(r.equals(Rota.INICIO))
+					_inicio = _irac;
+				else
+					_fim = _irac;
+				break;
+			case "Flor do Sertao":
+				if(r.equals(Rota.INICIO))
+					_inicio = _flor;
+				else
+					_fim = _flor;
+				break;
+			case "Romelandia":
+				if(r.equals(Rota.INICIO))
+					_inicio = _rome;
+				else
+					_fim = _rome;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
