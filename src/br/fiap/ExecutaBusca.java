@@ -21,14 +21,14 @@ public class ExecutaBusca {
 				System.out.println("Rota da solucao encontrada com "+busca.getCustoSolucao()+" KM: ");
 
 				for(Vertex v : busca.getSolucao()) {
-					if(v.name.equals(fim)){
-						System.out.println("Destino final alcançado. Cidade "+v.name);
+					if(v.nome.equals(fim)){
+						System.out.println("Destino final alcançado. Cidade "+v.nome);
 					}
-					else if(v.name.equals(comeco)){
-						System.out.println("Inicio na cidade "+v.name);
+					else if(v.nome.equals(comeco)){
+						System.out.println("Inicio na cidade "+v.nome);
 					}
 					else
-						System.out.println("Movendo-se para cidade "+v.name);
+						System.out.println("Movendo-se para cidade "+v.nome);
 				}
 			}
 			

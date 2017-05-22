@@ -11,15 +11,15 @@ import java.util.PriorityQueue;
 /*Classe que defines os Nos*/
 class Vertex implements Comparable<Vertex>
 {
-    public final String name;
+    public final String nome;
     public Edge[] vizinhos;
-    public double minDistance = Double.POSITIVE_INFINITY;
-    public Vertex previous;
-    public Vertex(String argName) { name = argName; }
-    public String toString() { return name; }
-    public int compareTo(Vertex other)
+    public double distanciaMinima = Double.POSITIVE_INFINITY;
+    public Vertex anterior;
+    public Vertex(String noNome) { nome = noNome; }
+    public String toString() { return nome; }
+    public int compareTo(Vertex o)
     {
-        return Double.compare(minDistance, other.minDistance);
+        return Double.compare(distanciaMinima, o.distanciaMinima);
     }
 }
 
@@ -31,12 +31,6 @@ class Edge
    public Edge(Vertex argTarget, double argWeight)
    { target = argTarget; weight = argWeight; }
 }
-
-
-
-
-
-
 
 
 /**
@@ -78,49 +72,6 @@ class No {
 	public double getCusto() {return custo;}
 	public void setCusto(double custo) {this.custo = custo;}
 }
-
-/**
- * Classe que implementa a lista de fronteira.
- * 猫 ela quem define a estrat茅gia de busca.
- * @author antonio
- *
- */
-class Fronteira {
-	
-	private Deque<No> lista = new LinkedList<No>();
-
-	/**
-	 * @return Se a fronteira est谩 vazia
-	 */
-	public boolean vazio() {
-		return lista.isEmpty();
-	}
-
-	/**
-	 * Insere o n贸 na lista de fronteira
-	 * @param no 
-	 */
-	public void insere(No no) {
-		lista.addLast(no);
-	}
-
-	/**
-	 * Retira o pr贸ximo n贸 de acordo com a pol铆tica
-	 * da lista de fronteira
-	 * 
-	 * @return O proximo n贸 da lista
-	 */
-	public No retiraProximo() {
-		//return lista.pollLast(); //LIFO
-		return lista.pollFirst(); //FIFO
-	}
-}
-
-
-
-
-
-
 
 /**
  * Classe que implementa o algoritmo de busca
@@ -220,7 +171,7 @@ public class Busca {
 	}
 	
 	public double getCustoSolucao() {
-		return _fim.minDistance;
+		return _fim.distanciaMinima;
 	}
 	
 	public void setEstadoInicial(String cidadeInicial) throws Exception{
@@ -377,15 +328,9 @@ public class Busca {
 				throw new Exception("Cidade: "+cidade+ " n鉶 cadastrada! Imposs韛el definir "+r.toString()+".");
 		}
 	}
-	
-	
-	private void computePaths()
-    {
-		
-    }
 
 	private void buscar() {
-_inicio.minDistance = 0.;
+		_inicio.distanciaMinima = 0.;
 	    
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 	    vertexQueue.add(_inicio);
@@ -397,58 +342,27 @@ _inicio.minDistance = 0.;
 	        for (Edge e : u.vizinhos){
 	            Vertex v = e.target;
 	            double weight = e.weight;
-	            double distanceThroughU = u.minDistance + weight;
-			    if (distanceThroughU < v.minDistance) {
+	            double distanceThroughU = u.distanciaMinima + weight;
+			    if (distanceThroughU < v.distanciaMinima) {
 			       vertexQueue.remove(v);
 		
-			       v.minDistance = distanceThroughU ;
-			       v.previous = u;
+			       v.distanciaMinima = distanceThroughU ;
+			       v.anterior = u;
 			       vertexQueue.add(v);
 			    }
 	        }
 	     }
-
-		
-		
-		//Vertex source = new Vertex("Palma Sola");
-		
-
-	    
-        //System.out.println("Distance to " + Z + ": " + Z.minDistance);
-        //List<Vertex> path = getShortestPathTo(Z);
-        //System.out.println("Path: " + path);
-		/*No aberto = new No(estadoInicial, null, null);
-		fronteira.insere(aberto);
-		
-		while(!fronteira.vazio()) {
-			aberto = fronteira.retiraProximo();
-			
-			if(aberto.estado.terminal()) {
-				return aberto;
-			} else for(Acao acao : Acao.values()) {
-				Estado vizinho = acao.aplica(aberto);
-				if(vizinho != null) {
-					No filho = new No(vizinho,aberto,acao);
-					fronteira.insere(filho);
-				}
-			}
-		}*/
-        
-
-		
-        //return null;
 	}
 	
-    public static List<Vertex> getShortestPathTo(Vertex target)
+    public static List<Vertex> encontrarMenorCaminhoParaNo(Vertex fim)
     {
         List<Vertex> path = new ArrayList<Vertex>();
-        for (Vertex vertex = target; vertex != null; vertex = vertex.previous)
+        for (Vertex vertex = fim; vertex != null; vertex = vertex.anterior)
             path.add(vertex);
 
         Collections.reverse(path);
         return path;
     }
-	
 	
 	/**
 	 * Resolve o problema com base em busca, realizando
@@ -459,7 +373,7 @@ _inicio.minDistance = 0.;
 	public double resolver(String cidadeDestino) throws Exception {
 		setVertice(Rota.FIM,cidadeDestino);
 		buscar(); //Executa busca
-        _rota = getShortestPathTo(_fim);
+        _rota = encontrarMenorCaminhoParaNo(_fim);
 		return getCustoSolucao();
 	}
 }
