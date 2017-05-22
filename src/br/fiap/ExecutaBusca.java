@@ -4,9 +4,41 @@ public class ExecutaBusca {
 
 	public static void main(String[] args) {
 		
-		Busca busca = new Busca(); 
-		busca.setEstadoInicial("A");
-		busca.resolver("M");
+		Busca busca = new Busca();
+		
+		String comeco =	"A";
+		String fim = "M";
+		
+		try{
+			busca.setEstadoInicial(comeco);
+			busca.resolver(fim);
+			
+			if(busca.getSolucao() == null) {
+				System.out.println("Nao ha solucao para o problema");
+			} else {
+				
+				System.out.println("Rota da solucao encontrada com "+busca.getCustoSolucao()+" KM: ");
+				
+				double distanciaAcumulada = 0;
+				
+				for(Vertex v : busca.getSolucao()) {
+					/*if(v.name.equals(comeco)){
+						System.out.println("Comecando na cidade: "+v.toString());
+					}*/
+					if(v.name.equals(fim)){
+						System.out.println("Destino final alcançado. Cidade: "+v.name);
+					}
+					else
+					System.out.println("Movendo-se para cidade "+v.name);
+				}
+			}
+			
+		}
+		catch(Exception ex){
+			System.out.println("Erro: "+ ex.toString());
+		}
+		 
+
 		
 		/*if(busca.getSolucao() == null) {
 			System.out.println("Nao ha solucao para o problema");

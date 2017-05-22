@@ -202,10 +202,12 @@ class Fronteira {
  */
 public class Busca {
 	
-	//start
+	//nó inicial
 	private Vertex _inicio;
-	//end
+	//nó final
 	private Vertex _fim;
+	//rota
+	private List<Vertex> _rota = new ArrayList<Vertex>();
 	
 	private Vertex _a;
 	private Vertex _m;
@@ -226,19 +228,19 @@ public class Busca {
 	//private Acao[] solucao = null;
 	//private double custoSolucao = 0;
 	
-	//public Acao[] getSolucao() {
-		//return solucao;
-	//}
+	public List<Vertex> getSolucao() {
+		return _rota;
+	}
 	
 	public double getCustoSolucao() {
 		return _fim.minDistance;
 	}
 	
-	public void setEstadoInicial(String cidadeInicial) {
+	public void setEstadoInicial(String cidadeInicial) throws Exception{
 		setVertice(Rota.INICIO,cidadeInicial);
 	}
 	
-	private void setVertice(Rota r, String cidade){
+	private void setVertice(Rota r, String cidade) throws Exception{
 		switch(cidade){
 			case "A":
 				if(r.equals(Rota.INICIO))
@@ -252,13 +254,19 @@ public class Busca {
 				else
 					_fim = _m;
 				break;
+			default:
+				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
 		}
 	}
 	
 	
 	private void computePaths()
     {
-		_inicio.minDistance = 0.;
+		
+    }
+
+	private void buscar() {
+_inicio.minDistance = 0.;
 	    
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 	    vertexQueue.add(_inicio);
@@ -280,10 +288,6 @@ public class Busca {
 			    }
 	        }
 	     }
-    }
-
-	private List<Vertex> buscar() {
-		
 
 		
 		
@@ -313,7 +317,7 @@ public class Busca {
         
 
 		
-        return null;
+        //return null;
 	}
 	
     public static List<Vertex> getShortestPathTo(Vertex target)
@@ -333,31 +337,10 @@ public class Busca {
 	 * 
 	 * @return O custo da soluÃ§Ã£o encontrada
 	 */
-	public double resolver(String cidadeDestino) {
+	public double resolver(String cidadeDestino) throws Exception {
 		setVertice(Rota.FIM,cidadeDestino);
-		
-		computePaths(); // run Dijkstra
-        System.out.println("Distance to " + _m + ": " + _m.minDistance);
-        List<Vertex> path = getShortestPathTo(_m);
-        System.out.println("Path: " + path);
-		
-		//No destino = buscar();
-		//if(destino == null) {
-			//this.solucao = null;
-			//this.custoSolucao = 0;
-			//return 0;
-		//}
-		
-		//No atual = destino;
-		//Deque<Acao> caminho = new LinkedList<Acao>();
-		//while(atual.acao != null) {
-			//caminho.addFirst(atual.acao);
-			//atual = atual.pai;
-		//}
-		
-		//this.solucao = (Acao[]) caminho.toArray(new Acao[caminho.size()]);
-		//this.custoSolucao = destino.getCusto();
-		//return this.custoSolucao;
-		return 1;
+		buscar(); //Executa busca
+        _rota = getShortestPathTo(_m);
+		return getCustoSolucao();
 	}
 }
