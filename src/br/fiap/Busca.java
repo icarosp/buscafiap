@@ -46,6 +46,12 @@ class Edge
  * o estado resultante deve ser <code>null</code> 
  * @author antonio
  */
+
+enum Rota{
+	INICIO,
+	FIM;
+}
+
 enum Acao {
 	DIREITA,
 	ESQUERDA,
@@ -196,8 +202,14 @@ class Fronteira {
  */
 public class Busca {
 	
+	//start
+	private Vertex _inicio;
+	//end
+	private Vertex _fim;
+	
 	private Vertex _a;
 	private Vertex _m;
+	
 	
 	public Busca(){
 
@@ -208,31 +220,48 @@ public class Busca {
 		
 	}
 	
-	private Estado estadoInicial;
-	private Fronteira fronteira = new Fronteira();
+	//private Estado estadoInicial;
+	//private Fronteira fronteira = new Fronteira();
 	
-	private Acao[] solucao = null;
-	private double custoSolucao = 0;
+	//private Acao[] solucao = null;
+	//private double custoSolucao = 0;
 	
-	public Acao[] getSolucao() {
-		return solucao;
-	}
+	//public Acao[] getSolucao() {
+		//return solucao;
+	//}
 	
 	public double getCustoSolucao() {
-		return custoSolucao;
+		return _fim.minDistance;
 	}
 	
-	public void setEstadoInicial(Estado inicial) {
-		estadoInicial = inicial;
-	}			
+	public void setEstadoInicial(String cidadeInicial) {
+		setVertice(Rota.INICIO,cidadeInicial);
+	}
+	
+	private void setVertice(Rota r, String cidade){
+		switch(cidade){
+			case "A":
+				if(r.equals(Rota.INICIO))
+					_inicio = _a;
+				else
+					_fim = _a;
+				break;
+			case "M":
+				if(r.equals(Rota.INICIO))
+					_inicio = _m;
+				else
+					_fim = _m;
+				break;
+		}
+	}
 	
 	
-	private static void computePaths(Vertex source)
+	private void computePaths()
     {
-		source.minDistance = 0.;
+		_inicio.minDistance = 0.;
 	    
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
-	    vertexQueue.add(source);
+	    vertexQueue.add(_inicio);
 
 	    while (!vertexQueue.isEmpty()) {
 	        Vertex u = vertexQueue.poll();
@@ -304,9 +333,10 @@ public class Busca {
 	 * 
 	 * @return O custo da solução encontrada
 	 */
-	public double resolver() {
+	public double resolver(String cidadeDestino) {
+		setVertice(Rota.FIM,cidadeDestino);
 		
-		computePaths(_a); // run Dijkstra
+		computePaths(); // run Dijkstra
         System.out.println("Distance to " + _m + ": " + _m.minDistance);
         List<Vertex> path = getShortestPathTo(_m);
         System.out.println("Path: " + path);
