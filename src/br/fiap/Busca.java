@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
 class Vertex implements Comparable<Vertex>
 {
     public final String name;
-    public Edge[] adjacencies;
+    public Edge[] vizinhos;
     public double minDistance = Double.POSITIVE_INFINITY;
     public Vertex previous;
     public Vertex(String argName) { name = argName; }
@@ -209,16 +209,16 @@ public class Busca {
 	//rota
 	private List<Vertex> _rota = new ArrayList<Vertex>();
 	
-	private Vertex _a;
-	private Vertex _m;
+	private Vertex _dion;
+	private Vertex _guar;
 	
 	
 	public Busca(){
 
-		_a = new Vertex("A");
-		_m = new Vertex("M");
-		_a.adjacencies = new Edge[]{ new Edge(_m, 8)};
-		_m.adjacencies = new Edge[]{ new Edge(_a, 8)}; 
+		_dion = new Vertex("Dionisio Cerqueira");
+		_guar = new Vertex("Guaruja do Sul");
+		_dion.vizinhos = new Edge[]{ new Edge(_guar, 23)};
+		_guar.vizinhos = new Edge[]{ new Edge(_dion, 23)}; 
 		
 	}
 	
@@ -242,17 +242,17 @@ public class Busca {
 	
 	private void setVertice(Rota r, String cidade) throws Exception{
 		switch(cidade){
-			case "A":
+			case "Dionisio Cerqueira":
 				if(r.equals(Rota.INICIO))
-					_inicio = _a;
+					_inicio = _dion;
 				else
-					_fim = _a;
+					_fim = _dion;
 				break;
-			case "M":
+			case "Guaruja do Sul":
 				if(r.equals(Rota.INICIO))
-					_inicio = _m;
+					_inicio = _guar;
 				else
-					_fim = _m;
+					_fim = _guar;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
@@ -275,7 +275,7 @@ _inicio.minDistance = 0.;
 	        Vertex u = vertexQueue.poll();
 
 	            // Visit each edge exiting u
-	        for (Edge e : u.adjacencies){
+	        for (Edge e : u.vizinhos){
 	            Vertex v = e.target;
 	            double weight = e.weight;
 	            double distanceThroughU = u.minDistance + weight;
@@ -340,7 +340,7 @@ _inicio.minDistance = 0.;
 	public double resolver(String cidadeDestino) throws Exception {
 		setVertice(Rota.FIM,cidadeDestino);
 		buscar(); //Executa busca
-        _rota = getShortestPathTo(_m);
+        _rota = getShortestPathTo(_fim);
 		return getCustoSolucao();
 	}
 }

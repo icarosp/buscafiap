@@ -6,8 +6,8 @@ public class ExecutaBusca {
 		
 		Busca busca = new Busca();
 		
-		String comeco =	"A";
-		String fim = "M";
+		String comeco =	"Dionisio Cerqueira";
+		String fim = "Guaruja do Sul";
 		
 		try{
 			busca.setEstadoInicial(comeco);
@@ -18,13 +18,8 @@ public class ExecutaBusca {
 			} else {
 				
 				System.out.println("Rota da solucao encontrada com "+busca.getCustoSolucao()+" KM: ");
-				
-				double distanciaAcumulada = 0;
-				
+
 				for(Vertex v : busca.getSolucao()) {
-					/*if(v.name.equals(comeco)){
-						System.out.println("Comecando na cidade: "+v.toString());
-					}*/
 					if(v.name.equals(fim)){
 						System.out.println("Destino final alcançado. Cidade: "+v.name);
 					}
