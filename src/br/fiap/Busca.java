@@ -217,6 +217,11 @@ public class Busca {
 	private Vertex _saom;
 	private Vertex _para;
 	private Vertex _desc;
+	private Vertex _belm;
+	private Vertex _sant;
+	private Vertex _irac;
+	private Vertex _flor;
+	private Vertex _rome;
 	
 	public Busca(){
 
@@ -228,6 +233,11 @@ public class Busca {
 		_saom = new Vertex("Sao Miguel do Oeste");
 		_para = new Vertex("Paraiso");
 		_desc = new Vertex("Descanso");
+		_belm = new Vertex("Belmonte");
+		_sant = new Vertex("Santa Helena");
+		_irac = new Vertex("Iraceminha");
+		_flor = new Vertex("Flor do Sertao");
+		_rome = new Vertex("Romelandia");
 		
 		//relacoes de divida/vizinhos
 		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
@@ -237,7 +247,11 @@ public class Busca {
 		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7)};
 		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5), new Edge(_desc, 16.7)};
 		_para.vizinhos = new Edge[]{ new Edge(_saom, 29.5)};
-		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7)};
+		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7),new Edge(_belm, 18.7), new Edge(_irac, 26.4)};
+		_belm.vizinhos = new Edge[]{ new Edge(_desc, 18.7), new Edge(_sant, 13.7)};
+		_sant.vizinhos = new Edge[]{ new Edge(_belm, 13.7)};
+		_irac.vizinhos = new Edge[]{ new Edge(_desc, 26.4),new Edge(_flor, 14)};
+		_flor.vizinhos = new Edge[]{ new Edge(_irac, 14)};
 		
 	}
 	
@@ -302,6 +316,18 @@ public class Busca {
 					_inicio = _desc;
 				else
 					_fim = _desc;
+				break;
+			case "Belmonte":
+				if(r.equals(Rota.INICIO))
+					_inicio = _belm;
+				else
+					_fim = _belm;
+				break;
+			case "Santa Helena":
+				if(r.equals(Rota.INICIO))
+					_inicio = _sant;
+				else
+					_fim = _sant;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");

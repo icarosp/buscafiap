@@ -7,7 +7,7 @@ public class ExecutaBusca {
 		Busca busca = new Busca();
 		
 		String comeco =	"Dionisio Cerqueira";
-		String fim = "Descanso";
+		String fim = "Santa Helena";
 		
 		try{
 			busca.setEstadoInicial(comeco);
