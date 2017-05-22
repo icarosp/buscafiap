@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-
 /*Classe que defines os Nos*/
 class Vertex implements Comparable<Vertex>
 {
@@ -26,10 +25,10 @@ class Vertex implements Comparable<Vertex>
 /*Classe que defines os Arcos*/
 class Edge
 {
-   public final Vertex target;
-   public final double weight;
-   public Edge(Vertex argTarget, double argWeight)
-   { target = argTarget; weight = argWeight; }
+   public final Vertex noDestino;
+   public final double arcCusto;
+   public Edge(Vertex noDestino, double arcCusto)
+   { this.noDestino = noDestino; this.arcCusto = arcCusto; }
 }
 
 
@@ -332,23 +331,23 @@ public class Busca {
 	private void buscar() {
 		_inicio.distanciaMinima = 0.;
 	    
-		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
-	    vertexQueue.add(_inicio);
+		PriorityQueue<Vertex> filaDeNos = new PriorityQueue<Vertex>();
+		filaDeNos.add(_inicio);
 
-	    while (!vertexQueue.isEmpty()) {
-	        Vertex u = vertexQueue.poll();
+	    while (!filaDeNos.isEmpty()) {
+	        Vertex u = filaDeNos.poll();
 
 	            // Visit each edge exiting u
 	        for (Edge e : u.vizinhos){
-	            Vertex v = e.target;
-	            double weight = e.weight;
-	            double distanceThroughU = u.distanciaMinima + weight;
+	            Vertex v = e.noDestino;
+	            double custo = e.arcCusto;
+	            double distanceThroughU = u.distanciaMinima + custo;
 			    if (distanceThroughU < v.distanciaMinima) {
-			       vertexQueue.remove(v);
+			    	filaDeNos.remove(v);
 		
 			       v.distanciaMinima = distanceThroughU ;
 			       v.anterior = u;
-			       vertexQueue.add(v);
+			       filaDeNos.add(v);
 			    }
 	        }
 	     }
@@ -356,12 +355,12 @@ public class Busca {
 	
     public static List<Vertex> encontrarMenorCaminhoParaNo(Vertex fim)
     {
-        List<Vertex> path = new ArrayList<Vertex>();
-        for (Vertex vertex = fim; vertex != null; vertex = vertex.anterior)
-            path.add(vertex);
+        List<Vertex> caminho = new ArrayList<Vertex>();
+        for (Vertex no = fim; no != null; no = no.anterior)
+        	caminho.add(no);
 
-        Collections.reverse(path);
-        return path;
+        Collections.reverse(caminho);
+        return caminho;
     }
 	
 	/**
