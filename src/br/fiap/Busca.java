@@ -222,6 +222,9 @@ public class Busca {
 	private Vertex _irac;
 	private Vertex _flor;
 	private Vertex _rome;
+	private Vertex _cunh;
+	private Vertex _mara;
+	private Vertex _tigr;
 	
 	public Busca(){
 
@@ -238,6 +241,9 @@ public class Busca {
 		_irac = new Vertex("Iraceminha");
 		_flor = new Vertex("Flor do Sertao");
 		_rome = new Vertex("Romelandia");
+		_cunh = new Vertex("Cunha Pora");
+		_mara = new Vertex("Maravilha");
+		_tigr = new Vertex("Tigrinhos");
 		
 		//relacoes de divida/vizinhos
 		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
@@ -250,10 +256,12 @@ public class Busca {
 		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7),new Edge(_belm, 18.7), new Edge(_irac, 26.4)};
 		_belm.vizinhos = new Edge[]{ new Edge(_desc, 18.7), new Edge(_sant, 13.7)};
 		_sant.vizinhos = new Edge[]{ new Edge(_belm, 13.7)};
-		_irac.vizinhos = new Edge[]{ new Edge(_desc, 26.4),new Edge(_flor, 14)};
+		_irac.vizinhos = new Edge[]{ new Edge(_desc, 26.4),new Edge(_flor, 14),new Edge(_cunh, 36.4),new Edge(_mara, 23.7)};
 		_flor.vizinhos = new Edge[]{ new Edge(_irac, 14),new Edge(_rome, 25.4)};
 		_rome.vizinhos = new Edge[]{ new Edge(_flor, 25.4)};
-		
+		_cunh.vizinhos = new Edge[]{ new Edge(_irac, 36.4),new Edge(_mara, 18.3)};
+		_mara.vizinhos = new Edge[]{ new Edge(_cunh, 18.3), new Edge(_irac, 23.7), new Edge(_tigr, 12.6)};
+		_tigr.vizinhos = new Edge[]{ new Edge(_mara, 12.6)};
 	}
 	
 	public List<Vertex> getSolucao() {
@@ -347,6 +355,24 @@ public class Busca {
 					_inicio = _rome;
 				else
 					_fim = _rome;
+				break;
+			case "Cunha Pora":
+				if(r.equals(Rota.INICIO))
+					_inicio = _cunh;
+				else
+					_fim = _cunh;
+				break;
+			case "Maravilha":
+				if(r.equals(Rota.INICIO))
+					_inicio = _mara;
+				else
+					_fim = _mara;
+				break;
+			case "Tigrinhos":
+				if(r.equals(Rota.INICIO))
+					_inicio = _tigr;
+				else
+					_fim = _tigr;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
