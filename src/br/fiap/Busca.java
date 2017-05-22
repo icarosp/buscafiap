@@ -210,23 +210,34 @@ public class Busca {
 	private List<Vertex> _rota = new ArrayList<Vertex>();
 	
 	private Vertex _dion;
-	private Vertex _guar;
+	private Vertex _guaruja;
+	private Vertex _saoj;
+	private Vertex _prin;
+	private Vertex _guaraciba;
+	private Vertex _saom;
+	private Vertex _para;
 	
 	
 	public Busca(){
 
 		_dion = new Vertex("Dionisio Cerqueira");
-		_guar = new Vertex("Guaruja do Sul");
-		_dion.vizinhos = new Edge[]{ new Edge(_guar, 23)};
-		_guar.vizinhos = new Edge[]{ new Edge(_dion, 23)}; 
+		_guaruja = new Vertex("Guaruja do Sul");
+		_saoj = new Vertex("Sao Jose do Cedro");
+		_prin = new Vertex("Princesa");
+		_guaraciba = new Vertex("Guaraciba");
+		_saom = new Vertex("Sao Miguel do Oeste");
+		_para = new Vertex("Paraiso");
+		
+		//relacoes de divida/vizinhos
+		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
+		_guaruja.vizinhos = new Edge[]{ new Edge(_dion, 23), new Edge(_saoj, 17.5)};
+		_saoj.vizinhos = new Edge[]{ new Edge(_guaruja, 17.5), new Edge(_prin, 11.7), new Edge(_guaraciba, 22.7)};
+		_prin.vizinhos = new Edge[]{ new Edge(_saoj, 11.7)};
+		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7)};
+		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5)};
+		_para.vizinhos = new Edge[]{ new Edge(_saom, 29.5)};
 		
 	}
-	
-	//private Estado estadoInicial;
-	//private Fronteira fronteira = new Fronteira();
-	
-	//private Acao[] solucao = null;
-	//private double custoSolucao = 0;
 	
 	public List<Vertex> getSolucao() {
 		return _rota;
@@ -250,9 +261,39 @@ public class Busca {
 				break;
 			case "Guaruja do Sul":
 				if(r.equals(Rota.INICIO))
-					_inicio = _guar;
+					_inicio = _guaruja;
 				else
-					_fim = _guar;
+					_fim = _guaruja;
+				break;
+			case "Sao Jose do Cedro":
+				if(r.equals(Rota.INICIO))
+					_inicio = _saoj;
+				else
+					_fim = _saoj;
+				break;
+			case "Princesa":
+				if(r.equals(Rota.INICIO))
+					_inicio = _prin;
+				else
+					_fim = _prin;
+				break;
+			case "Guaraciba":
+				if(r.equals(Rota.INICIO))
+					_inicio = _guaraciba;
+				else
+					_fim = _guaraciba;
+				break;
+			case "Sao Miguel do Oeste":
+				if(r.equals(Rota.INICIO))
+					_inicio = _saom;
+				else
+					_fim = _saom;
+				break;
+			case "Paraiso":
+				if(r.equals(Rota.INICIO))
+					_inicio = _para;
+				else
+					_fim = _para;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");

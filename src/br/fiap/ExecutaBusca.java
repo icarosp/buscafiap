@@ -7,7 +7,7 @@ public class ExecutaBusca {
 		Busca busca = new Busca();
 		
 		String comeco =	"Dionisio Cerqueira";
-		String fim = "Guaruja do Sul";
+		String fim = "Paraiso";
 		
 		try{
 			busca.setEstadoInicial(comeco);
@@ -21,10 +21,13 @@ public class ExecutaBusca {
 
 				for(Vertex v : busca.getSolucao()) {
 					if(v.name.equals(fim)){
-						System.out.println("Destino final alcançado. Cidade: "+v.name);
+						System.out.println("Destino final alcançado. Cidade "+v.name);
+					}
+					else if(v.name.equals(comeco)){
+						System.out.println("Inicio na cidade "+v.name);
 					}
 					else
-					System.out.println("Movendo-se para cidade "+v.name);
+						System.out.println("Movendo-se para cidade "+v.name);
 				}
 			}
 			
