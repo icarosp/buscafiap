@@ -2,43 +2,32 @@ package br.fiap;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
 /*Classe que defines os Nos*/
-class Vertex implements Comparable<Vertex>
+class No implements Comparable<No>
 {
     public final String nome;
-    public Edge[] vizinhos;
+    public Arco[] vizinhos;
     public double distanciaMinima = Double.POSITIVE_INFINITY;
-    public Vertex anterior;
-    public Vertex(String noNome) { nome = noNome; }
+    public No anterior;
+    public No(String noNome) { nome = noNome; }
     public String toString() { return nome; }
-    public int compareTo(Vertex o)
+    public int compareTo(No o)
     {
         return Double.compare(distanciaMinima, o.distanciaMinima);
     }
 }
 
 /*Classe que defines os Arcos*/
-class Edge
+class Arco
 {
-   public final Vertex noDestino;
+   public final No noDestino;
    public final double arcCusto;
-   public Edge(Vertex noDestino, double arcCusto)
+   public Arco(No noDestino, double arcCusto)
    { this.noDestino = noDestino; this.arcCusto = arcCusto; }
 }
-
-
-/**
- * Enumeração que declara todas as possíveis ações,
- * bem como suas consequências. Caso uma ação não
- * possa ser aplicada em determinada situação,
- * o estado resultante deve ser <code>null</code> 
- * @author antonio
- */
 
 enum Rota{
 	INICIO,
@@ -46,126 +35,99 @@ enum Rota{
 }
 
 /**
- * Estrutura contendo o nó de busca, como 
- * explicado em sala de aula.
- * O custo é calculado diretamente a partir da ação.
- * 
- * @author antonio
- *
- */
-class No {
-	//public final Estado estado;
-	private No pai;
-	private String nome; 
-	//public final Acao acao;
-	private LinkedList<No> vizinhos = new LinkedList<No>();
-	private double custo;
-	
-	/*public No(Estado e, No pai, Acao a) {
-		this.estado = e;
-		this.pai = pai;
-		this.acao = a;
-		this.custo = pai == null ? 0 : pai.custo + a.custo();
-	}*/
-	
-	public double getCusto() {return custo;}
-	public void setCusto(double custo) {this.custo = custo;}
-}
-
-/**
  * Classe que implementa o algoritmo de busca
- * @author antonio
+ * @author Icaro
  *
  */
 public class Busca {
 	
-	//n� inicial
-	private Vertex _inicio;
-	//n� final
-	private Vertex _fim;
+	//n� inicial
+	private No _inicio;
+	//n� final
+	private No _fim;
 	//rota
-	private List<Vertex> _rota = new ArrayList<Vertex>();
+	private List<No> _rota = new ArrayList<No>();
 	
-	private Vertex _dion;
-	private Vertex _guaruja;
-	private Vertex _saoj;
-	private Vertex _prin;
-	private Vertex _guaraciba;
-	private Vertex _saom;
-	private Vertex _para;
-	private Vertex _desc;
-	private Vertex _belm;
-	private Vertex _sant;
-	private Vertex _irac;
-	private Vertex _flor;
-	private Vertex _rome;
-	private Vertex _cunh;
-	private Vertex _mara;
-	private Vertex _tigr;
-	private Vertex _bomj;
-	private Vertex _serr;
-	private Vertex _mode;
-	private Vertex _salt;
-	private Vertex _camp;
-	private Vertex _saob;
-	private Vertex _palm;
-	private Vertex _anch;
+	private No _dion;
+	private No _guaruja;
+	private No _saoj;
+	private No _prin;
+	private No _guaraciba;
+	private No _saom;
+	private No _para;
+	private No _desc;
+	private No _belm;
+	private No _sant;
+	private No _irac;
+	private No _flor;
+	private No _rome;
+	private No _cunh;
+	private No _mara;
+	private No _tigr;
+	private No _bomj;
+	private No _serr;
+	private No _mode;
+	private No _salt;
+	private No _camp;
+	private No _saob;
+	private No _palm;
+	private No _anch;
 	
 	public Busca(){
 
-		_dion = new Vertex("Dionisio Cerqueira");
-		_guaruja = new Vertex("Guaruja do Sul");
-		_saoj = new Vertex("Sao Jose do Cedro");
-		_prin = new Vertex("Princesa");
-		_guaraciba = new Vertex("Guaraciba");
-		_saom = new Vertex("Sao Miguel do Oeste");
-		_para = new Vertex("Paraiso");
-		_desc = new Vertex("Descanso");
-		_belm = new Vertex("Belmonte");
-		_sant = new Vertex("Santa Helena");
-		_irac = new Vertex("Iraceminha");
-		_flor = new Vertex("Flor do Sertao");
-		_rome = new Vertex("Romelandia");
-		_cunh = new Vertex("Cunha Pora");
-		_mara = new Vertex("Maravilha");
-		_tigr = new Vertex("Tigrinhos");
-		_bomj = new Vertex("Bom Jesus do Oeste");
-		_serr = new Vertex("Serra Alta");
-		_mode = new Vertex("Modelo");
-		_salt = new Vertex("Saltinho");
-		_camp = new Vertex("Campos Ere");
-		_saob = new Vertex("Sao Bernardino");
-		_palm = new Vertex("Palma Sola");
-		_anch = new Vertex("Anchieta");
+		_dion = new No("Dionisio Cerqueira");
+		_guaruja = new No("Guaruja do Sul");
+		_saoj = new No("Sao Jose do Cedro");
+		_prin = new No("Princesa");
+		_guaraciba = new No("Guaraciba");
+		_saom = new No("Sao Miguel do Oeste");
+		_para = new No("Paraiso");
+		_desc = new No("Descanso");
+		_belm = new No("Belmonte");
+		_sant = new No("Santa Helena");
+		_irac = new No("Iraceminha");
+		_flor = new No("Flor do Sertao");
+		_rome = new No("Romelandia");
+		_cunh = new No("Cunha Pora");
+		_mara = new No("Maravilha");
+		_tigr = new No("Tigrinhos");
+		_bomj = new No("Bom Jesus do Oeste");
+		_serr = new No("Serra Alta");
+		_mode = new No("Modelo");
+		_salt = new No("Saltinho");
+		_camp = new No("Campos Ere");
+		_saob = new No("Sao Bernardino");
+		_palm = new No("Palma Sola");
+		_anch = new No("Anchieta");
 		
 		//relacoes de divida/vizinhos
-		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23),new Edge(_palm, 50.9)};
-		_guaruja.vizinhos = new Edge[]{ new Edge(_dion, 23), new Edge(_saoj, 17.5)};
-		_saoj.vizinhos = new Edge[]{ new Edge(_guaruja, 17.5), new Edge(_prin, 11.7), new Edge(_guaraciba, 15.2)};
-		_prin.vizinhos = new Edge[]{ new Edge(_saoj, 11.7)};
-		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7),new Edge(_anch, 38.1)};
-		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5), new Edge(_desc, 16.7)};
-		_para.vizinhos = new Edge[]{ new Edge(_saom, 29.5)};
-		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7),new Edge(_belm, 18.7), new Edge(_irac, 26.4)};
-		_belm.vizinhos = new Edge[]{ new Edge(_desc, 18.7), new Edge(_sant, 13.7)};
-		_sant.vizinhos = new Edge[]{ new Edge(_belm, 13.7)};
-		_irac.vizinhos = new Edge[]{ new Edge(_desc, 26.4),new Edge(_flor, 14),new Edge(_cunh, 36.4),new Edge(_mara, 23.7)};
-		_flor.vizinhos = new Edge[]{ new Edge(_irac, 14),new Edge(_rome, 25.4)};
-		_rome.vizinhos = new Edge[]{ new Edge(_flor, 25.4)};
-		_cunh.vizinhos = new Edge[]{ new Edge(_irac, 36.4),new Edge(_mara, 18.3)};
-		_mara.vizinhos = new Edge[]{ new Edge(_cunh, 18.3), new Edge(_irac, 23.7), new Edge(_tigr, 12.6)};
-		_tigr.vizinhos = new Edge[]{ new Edge(_mara, 12.6),new Edge(_bomj, 9.6)};
-		_bomj.vizinhos = new Edge[]{ new Edge(_tigr, 9.6),new Edge(_serr, 14.6)};
-		_serr.vizinhos = new Edge[]{ new Edge(_bomj, 14.6),new Edge(_mode, 12), new Edge(_salt, 18.5)};
-		_mode.vizinhos = new Edge[]{ new Edge(_serr, 12)};
-		_salt.vizinhos = new Edge[]{ new Edge(_serr, 18.5),new Edge(_camp, 39.3)};
-		_camp.vizinhos = new Edge[]{ new Edge(_salt, 39.3),new Edge(_saob, 38.2), new Edge(_anch, 28.9),new Edge(_palm, 34)};
-		_saob.vizinhos = new Edge[]{ new Edge(_camp, 38.2)};
-		_anch.vizinhos = new Edge[]{ new Edge(_camp, 28.9),new Edge(_palm, 29.7),new Edge(_guaraciba, 38.1)};
-		_palm.vizinhos = new Edge[]{ new Edge(_camp, 34),new Edge(_anch, 29.7),new Edge(_dion, 50.9)};
+		_dion.vizinhos = new Arco[]{ new Arco(_guaruja, 23),new Arco(_palm, 50.9)};
+		_guaruja.vizinhos = new Arco[]{ new Arco(_dion, 23), new Arco(_saoj, 17.5)};
+		_saoj.vizinhos = new Arco[]{ new Arco(_guaruja, 17.5), new Arco(_prin, 11.7), new Arco(_guaraciba, 15.2)};
+		_prin.vizinhos = new Arco[]{ new Arco(_saoj, 11.7)};
+		_guaraciba.vizinhos = new Arco[]{ new Arco(_saoj, 15.2),new Arco(_saom, 22.7),new Arco(_anch, 38.1)};
+		_saom.vizinhos = new Arco[]{ new Arco(_guaraciba, 22.7), new Arco(_para, 29.5), new Arco(_desc, 16.7)};
+		_para.vizinhos = new Arco[]{ new Arco(_saom, 29.5)};
+		_desc.vizinhos = new Arco[]{ new Arco(_saom, 16.7),new Arco(_belm, 18.7), new Arco(_irac, 26.4)};
+		_belm.vizinhos = new Arco[]{ new Arco(_desc, 18.7), new Arco(_sant, 13.7)};
+		_sant.vizinhos = new Arco[]{ new Arco(_belm, 13.7)};
+		_irac.vizinhos = new Arco[]{ new Arco(_desc, 26.4),new Arco(_flor, 14),new Arco(_cunh, 36.4),new Arco(_mara, 23.7)};
+		_flor.vizinhos = new Arco[]{ new Arco(_irac, 14),new Arco(_rome, 25.4)};
+		_rome.vizinhos = new Arco[]{ new Arco(_flor, 25.4)};
+		_cunh.vizinhos = new Arco[]{ new Arco(_irac, 36.4),new Arco(_mara, 18.3)};
+		_mara.vizinhos = new Arco[]{ new Arco(_cunh, 18.3), new Arco(_irac, 23.7), new Arco(_tigr, 12.6)};
+		_tigr.vizinhos = new Arco[]{ new Arco(_mara, 12.6),new Arco(_bomj, 9.6)};
+		_bomj.vizinhos = new Arco[]{ new Arco(_tigr, 9.6),new Arco(_serr, 14.6)};
+		_serr.vizinhos = new Arco[]{ new Arco(_bomj, 14.6),new Arco(_mode, 12), new Arco(_salt, 18.5)};
+		_mode.vizinhos = new Arco[]{ new Arco(_serr, 12)};
+		_salt.vizinhos = new Arco[]{ new Arco(_serr, 18.5),new Arco(_camp, 39.3)};
+		_camp.vizinhos = new Arco[]{ new Arco(_salt, 39.3),new Arco(_saob, 38.2), new Arco(_anch, 28.9),new Arco(_palm, 34)};
+		_saob.vizinhos = new Arco[]{ new Arco(_camp, 38.2)};
+		_anch.vizinhos = new Arco[]{ new Arco(_camp, 28.9),new Arco(_palm, 29.7),new Arco(_guaraciba, 38.1)};
+		_palm.vizinhos = new Arco[]{ new Arco(_camp, 34),new Arco(_anch, 29.7),new Arco(_dion, 50.9)};
 	}
 	
-	public List<Vertex> getSolucao() {
+	public List<No> getSolucao() {
 		return _rota;
 	}
 	
@@ -324,28 +286,28 @@ public class Busca {
 					_fim = _palm;
 				break;
 			default:
-				throw new Exception("Cidade: "+cidade+ " n�o cadastrada! Imposs�vel definir "+r.toString()+".");
+				throw new Exception("Cidade: "+cidade+ " n�o cadastrada! Imposs�vel definir "+r.toString()+".");
 		}
 	}
 
 	private void buscar() {
 		_inicio.distanciaMinima = 0.;
 	    
-		PriorityQueue<Vertex> filaDeNos = new PriorityQueue<Vertex>();
+		PriorityQueue<No> filaDeNos = new PriorityQueue<No>();
 		filaDeNos.add(_inicio);
 
 	    while (!filaDeNos.isEmpty()) {
-	        Vertex u = filaDeNos.poll();
+	        No u = filaDeNos.poll();
 
-	            // Visit each edge exiting u
-	        for (Edge e : u.vizinhos){
-	            Vertex v = e.noDestino;
+	            // Visit each Arco exiting u
+	        for (Arco e : u.vizinhos){
+	            No v = e.noDestino;
 	            double custo = e.arcCusto;
-	            double distanceThroughU = u.distanciaMinima + custo;
-			    if (distanceThroughU < v.distanciaMinima) {
+	            double distanciaNosVizinho = u.distanciaMinima + custo;
+			    if (distanciaNosVizinho < v.distanciaMinima) {
 			    	filaDeNos.remove(v);
 		
-			       v.distanciaMinima = distanceThroughU ;
+			       v.distanciaMinima = distanciaNosVizinho ;
 			       v.anterior = u;
 			       filaDeNos.add(v);
 			    }
@@ -353,10 +315,10 @@ public class Busca {
 	     }
 	}
 	
-    public static List<Vertex> encontrarMenorCaminhoParaNo(Vertex fim)
+    public static List<No> encontrarMenorCaminhoParaNo(No fim)
     {
-        List<Vertex> caminho = new ArrayList<Vertex>();
-        for (Vertex no = fim; no != null; no = no.anterior)
+        List<No> caminho = new ArrayList<No>();
+        for (No no = fim; no != null; no = no.anterior)
         	caminho.add(no);
 
         Collections.reverse(caminho);

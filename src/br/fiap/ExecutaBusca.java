@@ -7,8 +7,8 @@ public class ExecutaBusca {
 		Busca busca = new Busca();
 		
 		//Digitar nome das cidades sem com letras Maiusculas e Minusculas e sem acento
-		String comeco =	"Sao Bernardino";
-		String fim = "Santa Helena";
+		String comeco =	"Campos Ere";
+		String fim = "Descanso";
 		
 		try{
 			busca.setEstadoInicial(comeco);
@@ -20,15 +20,15 @@ public class ExecutaBusca {
 				
 				System.out.println("Rota da solucao encontrada com "+busca.getCustoSolucao()+" KM: ");
 
-				for(Vertex v : busca.getSolucao()) {
-					if(v.nome.equals(fim)){
-						System.out.println("Destino final alcançado. Cidade "+v.nome);
+				for(No n : busca.getSolucao()) {
+					if(n.nome.equals(fim)){
+						System.out.println("Destino final alcançado. Cidade "+n.nome);
 					}
-					else if(v.nome.equals(comeco)){
-						System.out.println("Inicio na cidade "+v.nome);
+					else if(n.nome.equals(comeco)){
+						System.out.println("Inicio na cidade "+n.nome);
 					}
 					else
-						System.out.println("Movendo-se para cidade "+v.nome);
+						System.out.println("Movendo-se para cidade "+n.nome);
 				}
 			}
 			
