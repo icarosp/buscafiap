@@ -216,7 +216,7 @@ public class Busca {
 	private Vertex _guaraciba;
 	private Vertex _saom;
 	private Vertex _para;
-	
+	private Vertex _desc;
 	
 	public Busca(){
 
@@ -227,15 +227,17 @@ public class Busca {
 		_guaraciba = new Vertex("Guaraciba");
 		_saom = new Vertex("Sao Miguel do Oeste");
 		_para = new Vertex("Paraiso");
+		_desc = new Vertex("Descanso");
 		
 		//relacoes de divida/vizinhos
 		_dion.vizinhos = new Edge[]{ new Edge(_guaruja, 23)};
 		_guaruja.vizinhos = new Edge[]{ new Edge(_dion, 23), new Edge(_saoj, 17.5)};
-		_saoj.vizinhos = new Edge[]{ new Edge(_guaruja, 17.5), new Edge(_prin, 11.7), new Edge(_guaraciba, 22.7)};
+		_saoj.vizinhos = new Edge[]{ new Edge(_guaruja, 17.5), new Edge(_prin, 11.7), new Edge(_guaraciba, 15.2)};
 		_prin.vizinhos = new Edge[]{ new Edge(_saoj, 11.7)};
 		_guaraciba.vizinhos = new Edge[]{ new Edge(_saoj, 15.2),new Edge(_saom, 22.7)};
-		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5)};
+		_saom.vizinhos = new Edge[]{ new Edge(_guaraciba, 22.7), new Edge(_para, 29.5), new Edge(_desc, 16.7)};
 		_para.vizinhos = new Edge[]{ new Edge(_saom, 29.5)};
+		_desc.vizinhos = new Edge[]{ new Edge(_saom, 16.7)};
 		
 	}
 	
@@ -294,6 +296,12 @@ public class Busca {
 					_inicio = _para;
 				else
 					_fim = _para;
+				break;
+			case "Descanso":
+				if(r.equals(Rota.INICIO))
+					_inicio = _desc;
+				else
+					_fim = _desc;
 				break;
 			default:
 				throw new Exception("Cidade: "+cidade+ " não cadastrada! Impossível definir "+r.toString()+".");
